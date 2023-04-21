@@ -21,4 +21,9 @@ abstract class AbstractStatusDecorator extends AbstractServerStatus {
     public int getRequestCost() {
         return statusToBeDecorated.getRequestCost();
     }
+
+    @Override
+    public long getId(){
+        return statusToBeDecorated.getId();
+    }
 }

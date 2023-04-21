@@ -1,6 +1,6 @@
 package com.acme.statusmgr.beans;
 
-public class FreeJVMMemoryDecorator  extends AbstractStatusDecorator {
+public class FreeJVMMemoryDecorator extends AbstractStatusDecorator {
     final int COST = 7;
 
     public FreeJVMMemoryDecorator(AbstractServerStatus s) {
@@ -9,12 +9,17 @@ public class FreeJVMMemoryDecorator  extends AbstractStatusDecorator {
     }
 
     @Override
+    public long getId() {
+        return super.getId();
+    }
+
+    @Override
     public String getStatusDesc() {
         return super.getStatusDesc() + String.format(", and there is a total of %d bytes of JVM memory free", Runtime.getRuntime().freeMemory());
     }
 
     @Override
-    public int getRequestCost(){
+    public int getRequestCost() {
         return super.getRequestCost() + COST;
     }
 }

@@ -1,6 +1,6 @@
 package com.acme.statusmgr.beans;
 
-public class TempLocationDecorator extends AbstractStatusDecorator{
+public class TempLocationDecorator extends AbstractStatusDecorator {
     final int COST = 29;
 
     public TempLocationDecorator(AbstractServerStatus s) {
@@ -9,12 +9,17 @@ public class TempLocationDecorator extends AbstractStatusDecorator{
     }
 
     @Override
+    public long getId() {
+        return super.getId();
+    }
+
+    @Override
     public String getStatusDesc() {
         return super.getStatusDesc() + String.format(", and the server's temp file location is %s", System.getenv("TEMP"));
     }
 
     @Override
-    public int getRequestCost(){
+    public int getRequestCost() {
         return super.getRequestCost() + COST;
     }
 }

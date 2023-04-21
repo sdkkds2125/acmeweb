@@ -9,6 +9,11 @@ public class AvailableProcessorsDecorator extends AbstractStatusDecorator {
     }
 
     @Override
+    public long getId() {
+        return super.getId();
+    }
+
+    @Override
     public String getStatusDesc() {
         return super.getStatusDesc() + String.format(", and there are %d processors available", Runtime.getRuntime().availableProcessors());
     }

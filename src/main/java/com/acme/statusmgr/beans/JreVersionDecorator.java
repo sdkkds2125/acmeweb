@@ -1,10 +1,15 @@
 package com.acme.statusmgr.beans;
 
-public class JreVersionDecorator extends AbstractStatusDecorator{
+public class JreVersionDecorator extends AbstractStatusDecorator {
     final int COST = 19;
 
     public JreVersionDecorator(AbstractServerStatus s) {
         super(s);
+    }
+
+    @Override
+    public long getId() {
+        return super.getId();
     }
 
     @Override
@@ -13,7 +18,7 @@ public class JreVersionDecorator extends AbstractStatusDecorator{
     }
 
     @Override
-    public int getRequestCost(){
+    public int getRequestCost() {
         return super.getRequestCost() + COST;
     }
 }
