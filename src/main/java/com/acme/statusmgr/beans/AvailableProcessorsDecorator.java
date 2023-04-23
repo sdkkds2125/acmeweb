@@ -1,5 +1,7 @@
 package com.acme.statusmgr.beans;
 
+import com.acme.statusmgr.StatusDecoratorFacade;
+
 public class AvailableProcessorsDecorator extends AbstractStatusDecorator {
     final int COST = 3;
 
@@ -15,7 +17,7 @@ public class AvailableProcessorsDecorator extends AbstractStatusDecorator {
 
     @Override
     public String getStatusDesc() {
-        return super.getStatusDesc() + String.format(", and there are %d processors available", Runtime.getRuntime().availableProcessors());
+        return super.getStatusDesc() + StatusDecoratorFacade.getAvailableProcessors();
     }
 
     @Override

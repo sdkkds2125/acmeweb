@@ -1,5 +1,7 @@
 package com.acme.statusmgr.beans;
 
+import com.acme.statusmgr.StatusDecoratorFacade;
+
 public class JreVersionDecorator extends AbstractStatusDecorator {
     final int COST = 19;
 
@@ -14,7 +16,7 @@ public class JreVersionDecorator extends AbstractStatusDecorator {
 
     @Override
     public String getStatusDesc() {
-        return super.getStatusDesc() + String.format(", and the JRE version is %s", Runtime.version().toString());
+        return super.getStatusDesc() + StatusDecoratorFacade.getJreVersion();
     }
 
     @Override
