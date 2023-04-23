@@ -1,12 +1,14 @@
 package com.acme.statusmgr.beans;
 
-import com.acme.statusmgr.StatusDecoratorFacade;
+import com.acme.statusmgr.SystemStatusFacade;
+import com.acme.statusmgr.SystemStatusRetrieverInterface;
 
 public class JreVersionDecorator extends AbstractStatusDecorator {
     final int COST = 19;
-
-    public JreVersionDecorator(AbstractServerStatus s) {
+    private SystemStatusRetrieverInterface ssri;
+    public JreVersionDecorator(AbstractServerStatus s, SystemStatusRetrieverInterface ssri) {
         super(s);
+        this.ssri = ssri;
     }
 
     @Override
@@ -16,7 +18,7 @@ public class JreVersionDecorator extends AbstractStatusDecorator {
 
     @Override
     public String getStatusDesc() {
-        return super.getStatusDesc() + StatusDecoratorFacade.getJreVersion();
+        return super.getStatusDesc() + ssri.getJreVersion();
     }
 
     @Override

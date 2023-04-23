@@ -1,6 +1,8 @@
 package com.acme.statusmgr.beans;
 
 import com.acme.servermgr.ServerManager;
+import com.acme.statusmgr.SystemStatusFacade;
+import com.acme.statusmgr.SystemStatusRetrieverInterface;
 
 /**
  * A POJO that represents Server Status and can be returned to Spring as the result of a request.

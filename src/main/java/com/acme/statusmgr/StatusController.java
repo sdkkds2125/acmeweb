@@ -33,7 +33,7 @@ public class StatusController {
 
     protected static final String template = "Server Status requested by %s";
     protected final AtomicLong counter = new AtomicLong();
-
+    private static SystemStatusRetrieverInterface ssri = new SystemStatusFacade();
     /**
      * Process a request for server status information
      *
@@ -67,22 +67,22 @@ public class StatusController {
             for (String detail : details) {
                 switch (detail) {
                     case "availableProcessors" -> {
-                        detailedStatus = new AvailableProcessorsDecorator(detailedStatus);
+                        detailedStatus = new AvailableProcessorsDecorator(detailedStatus,ssri);
                     }
                     case "freeJVMMemory" -> {
-                        detailedStatus = new FreeJVMMemoryDecorator(detailedStatus);
+                        detailedStatus = new FreeJVMMemoryDecorator(detailedStatus,ssri);
                     }
                     case "totalJVMMemory" -> {
-                        detailedStatus = new TotalJVMMemoryDecorator(detailedStatus);
+                        detailedStatus = new TotalJVMMemoryDecorator(detailedStatus,ssri);
                     }
                     case "jreVersion" -> {
-                        detailedStatus = new JreVersionDecorator(detailedStatus);
+                        detailedStatus = new JreVersionDecorator(detailedStatus,ssri);
                     }
                     case "tempLocation" -> {
-                        detailedStatus = new TempLocationDecorator(detailedStatus);
+                        detailedStatus = new TempLocationDecorator(detailedStatus,ssri);
                     }
                     default -> {
-                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, detail + " is not a valid detail request");
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid details option: " + detail);
                     }
                 }
             }
@@ -90,5 +90,9 @@ public class StatusController {
 
         }
         return detailedStatus;
+    }
+
+    static void setSsri(SystemStatusRetrieverInterface ssri){
+        StatusController.ssri = ssri;
     }
 }

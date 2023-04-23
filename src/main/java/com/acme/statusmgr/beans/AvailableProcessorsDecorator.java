@@ -1,14 +1,15 @@
 package com.acme.statusmgr.beans;
 
-import com.acme.statusmgr.StatusDecoratorFacade;
+import com.acme.statusmgr.SystemStatusFacade;
+import com.acme.statusmgr.SystemStatusRetrieverInterface;
 
 public class AvailableProcessorsDecorator extends AbstractStatusDecorator {
     final int COST = 3;
-
-    public AvailableProcessorsDecorator(AbstractServerStatus s) {
+    private SystemStatusRetrieverInterface ssri;
+    public AvailableProcessorsDecorator(AbstractServerStatus s, SystemStatusRetrieverInterface ssri) {
         super(s);
-
-    }
+        this.ssri = ssri;
+ }
 
     @Override
     public long getId() {
@@ -17,7 +18,7 @@ public class AvailableProcessorsDecorator extends AbstractStatusDecorator {
 
     @Override
     public String getStatusDesc() {
-        return super.getStatusDesc() + StatusDecoratorFacade.getAvailableProcessors();
+        return super.getStatusDesc() + ssri.getAvailableProcessors();
     }
 
     @Override

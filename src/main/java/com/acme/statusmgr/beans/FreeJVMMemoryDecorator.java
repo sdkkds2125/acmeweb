@@ -1,13 +1,14 @@
 package com.acme.statusmgr.beans;
 
-import com.acme.statusmgr.StatusDecoratorFacade;
+import com.acme.statusmgr.SystemStatusFacade;
+import com.acme.statusmgr.SystemStatusRetrieverInterface;
 
 public class FreeJVMMemoryDecorator extends AbstractStatusDecorator {
     final int COST = 7;
-
-    public FreeJVMMemoryDecorator(AbstractServerStatus s) {
+    private SystemStatusRetrieverInterface ssri;
+    public FreeJVMMemoryDecorator(AbstractServerStatus s,SystemStatusRetrieverInterface ssri) {
         super(s);
-
+        this.ssri = ssri;
     }
 
     @Override
@@ -17,7 +18,7 @@ public class FreeJVMMemoryDecorator extends AbstractStatusDecorator {
 
     @Override
     public String getStatusDesc() {
-        return super.getStatusDesc() + StatusDecoratorFacade.getFreeJvmMemory();
+        return super.getStatusDesc() + ssri.getFreeJvmMemory();
     }
 
     @Override

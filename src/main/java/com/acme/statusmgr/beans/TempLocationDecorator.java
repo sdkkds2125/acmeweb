@@ -1,13 +1,14 @@
 package com.acme.statusmgr.beans;
 
-import com.acme.statusmgr.StatusDecoratorFacade;
+import com.acme.statusmgr.SystemStatusFacade;
+import com.acme.statusmgr.SystemStatusRetrieverInterface;
 
 public class TempLocationDecorator extends AbstractStatusDecorator {
     final int COST = 29;
-
-    public TempLocationDecorator(AbstractServerStatus s) {
+    private SystemStatusRetrieverInterface ssri;
+    public TempLocationDecorator(AbstractServerStatus s, SystemStatusRetrieverInterface ssri) {
         super(s);
-
+        this.ssri = ssri;
     }
 
     @Override
@@ -17,7 +18,7 @@ public class TempLocationDecorator extends AbstractStatusDecorator {
 
     @Override
     public String getStatusDesc() {
-        return super.getStatusDesc() + StatusDecoratorFacade.getTempLocation();
+        return super.getStatusDesc() + ssri.getTempLocation();
     }
 
     @Override

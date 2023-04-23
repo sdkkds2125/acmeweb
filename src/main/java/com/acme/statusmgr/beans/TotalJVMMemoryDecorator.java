@@ -1,11 +1,13 @@
 package com.acme.statusmgr.beans;
 
+import com.acme.statusmgr.SystemStatusRetrieverInterface;
+
 public class TotalJVMMemoryDecorator extends AbstractStatusDecorator {
     final int COST = 13;
-
-    public TotalJVMMemoryDecorator(AbstractServerStatus s) {
+    private SystemStatusRetrieverInterface ssri;
+    public TotalJVMMemoryDecorator(AbstractServerStatus s, SystemStatusRetrieverInterface ssri) {
         super(s);
-
+        this.ssri = ssri;
     }
 
     @Override
@@ -15,7 +17,7 @@ public class TotalJVMMemoryDecorator extends AbstractStatusDecorator {
 
     @Override
     public String getStatusDesc() {
-        return super.getStatusDesc() + String.format(", and there is a total of %d bytes of JVM memory", Runtime.getRuntime().totalMemory());
+        return super.getStatusDesc() + ssri.getTotalJvmMemory();
     }
 
     @Override
