@@ -29,11 +29,29 @@ The `name` parameter value overrides the default value of “Anonymous” and is
 `---- [source, json]
 {"id":2,"contentHeader":"Server Status requested by Moishe","statusDesc":"Server is up"}
 ----`
+It also accepts HTTP GET requests such as:
+http://localhost:8080/server/status/detailed?details=availableProcessors,tempLocation
 
-**--> Syntax for URLS:**
+and will respond to the recognized request with a JSON representation of a response that corresponds to the simple request above with any additional details you have added 
+
+A detailed request like:
+http://localhost:8080/server/status/detailed?details=availableProcessors,tempLocation
+
+will respond with:
+`----[source, json]
+{"id":1,"requestCost":33,"statusDesc":"Server is up, and there are 16 processors available, 
+and the server's temp file location is C:\\Users\\shlom\\AppData\\Local\\Temp","contentHeader":"Server Status requested by Anonymous"}
+----`
+
+**--> Syntax for simple status URLS:**
 *    All start with /server
 *    /status  will give back status of server
 *    an optional param of 'name' specifies a requestor name to appear in response
+
+**--> Syntax for detailed status URLS:**
+*    All start with /server/status/detailed
+*    Then you put ?details= and then you put a comma seperated list of the statuses you want
+*    Recognized details are availableProcessors, freeJVMMemory, totalJVMMemory, jreVersion, tempLocation
 
 **--> What you'll need**
 

@@ -44,8 +44,10 @@ public class StatusControllerDetailedTest {
      */
     @BeforeAll
     public static void beforeAll() {
-       // todo StatusController.setSystemInfoFacade(null /* todo: Inject appropriate object */);
+        SystemStatusRetrieverInterface ssri = new MockSystemStatus();
+        System.out.println("\n" + ssri.getClass());
         StatusController.setSsri(new MockSystemStatus());
+
     }
 
 

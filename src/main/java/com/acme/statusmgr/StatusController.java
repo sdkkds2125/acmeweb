@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static org.hamcrest.Matchers.instanceOf;
+
 /**
  * Controller for all web/REST requests about the status of servers
  * <p>
@@ -34,6 +36,7 @@ public class StatusController {
     protected static final String template = "Server Status requested by %s";
     protected final AtomicLong counter = new AtomicLong();
     private static SystemStatusRetrieverInterface ssri = new SystemStatusFacade();
+    private static final Logger logger = LoggerFactory.getLogger("StatusController");
     /**
      * Process a request for server status information
      *
@@ -51,7 +54,7 @@ public class StatusController {
      * Process a request for detailed server status information
      *
      * @param name    optional param identifying the requester
-     * @param details optional param with a list of server status details being requested
+     * @param details a list of server status details being requested
      * @return an AbstractServerStatus object containing the info to be returned to the requestor
      */
     @RequestMapping("/status/detailed")
@@ -62,7 +65,7 @@ public class StatusController {
         AbstractServerStatus detailedStatus = new ServerStatus(counter.incrementAndGet(), String.format(template, name));
 
         if (details != null) {
-            Logger logger = LoggerFactory.getLogger("StatusController");
+
             logger.info("Details were provided: " + Arrays.toString(details.toArray()));
             for (String detail : details) {
                 switch (detail) {
@@ -82,6 +85,7 @@ public class StatusController {
                         detailedStatus = new TempLocationDecorator(detailedStatus,ssri);
                     }
                     default -> {
+                        logger.error("Invalid details option: " + detail);
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid details option: " + detail);
                     }
                 }
@@ -89,10 +93,12 @@ public class StatusController {
 
 
         }
+        logger.info("The request costed " + detailedStatus.getRequestCost());
         return detailedStatus;
     }
 
     static void setSsri(SystemStatusRetrieverInterface ssri){
         StatusController.ssri = ssri;
+        logger.info("Changing to mock information for testing purposes");
     }
 }
